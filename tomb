@@ -56,7 +56,7 @@ typeset TMPPREFIX=${TMPPREFIX:-/tmp}
 
 # Keep a reference of the original command line arguments
 typeset -a OLDARGS
-for arg in "${(@)argv}"; do OLDARGS+=("$arg"); done
+OLDARGS=("${(@)argv}")
 
 # Special command requirements
 typeset -a DD WIPE PINENTRY
