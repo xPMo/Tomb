@@ -142,10 +142,9 @@ _endgame() {
     [[ -z $TOMBFILESSTAT ]] || _restore_stat
 
 	# Prepare some random material to overwrite vars
-	local rr="$RANDOM"
-	while [[ ${#rr} -lt 500 ]]; do
-		rr+="$RANDOM"
-	done
+	setopt localoptions nomultibyte # work with bytes, not characters
+	local rr
+	read -r -k 500 -u 0 rr < /dev/urandom
 
 	# Ensure no information is left in unallocated memory
 	TOMBPATH="$rr";		 unset TOMBPATH
