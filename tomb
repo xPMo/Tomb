@@ -139,9 +139,11 @@ _endgame() {
     [[ -z $TOMBFILESSTAT ]] || _restore_stat
 
 	# Prepare some random material to overwrite vars
-	local rr="$RANDOM"
-	while [[ ${#rr} -lt 500 ]]; do
-		rr+="$RANDOM"
+	local rr
+	setopt localoptions nomultibyte # work with bytes, not codepoints
+	local -i rand
+	repeat 250; do
+		rr+="${(#)$(((rand = RANDOM) >> 8))}${(#)$((rand & 0xFF))}"
 	done
 
 	# Ensure no information is left in unallocated memory
